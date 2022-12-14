@@ -1,0 +1,32 @@
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+    width: 400px;
+
+    .textfield {
+      width: 80%;
+    }
+
+}
+
+.buttons {
+    flex-direction: row;
+    height: 15%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 24px;
+    box-sizing: border-box;
+    
+
+    .btn {
+      text-transform: none;
+      width: 40%;
+      padding: 8px 0;
+    }
+  }

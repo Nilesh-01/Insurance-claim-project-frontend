@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+
+.homepage-wrapper{
+    display: flex;
+    flex: 1;
+    padding: 14px 16px;
+    box-sizing: border-box;
+    flex-direction: column;
+    height: 100%;
+    gap: 16px;
+    .navbar{
+        display: flex;
+        width: 100%;
+        color: #000;
+        align-items: center;
+        .navbar-left{
+            flex: 1;
+        }
+        .navbar-right{
+            display: flex;
+            justify-content: flex-end;
+            gap: 16px;
+            flex: 1;
+            .btn {
+                text-transform: none;
+                padding: 8px 14px ;
+              }
+        }
+    }
+    .userdetails{
+        display: flex;
+        padding: 16px;
+        flex-direction: column;
+        justify-content: center;
+        align-self: center;
+        align-items: center;
+        width: fit-content;
+        gap: 6px;
+        .avatar{
+            width: 60px;
+            height: 60px;
+        }
+        .text{
+            margin: 0;
+        }
+    }
+    .vehicles{
+        table {
+            border-collapse: collapse;
+            width: 100%;
+          }
+          
+          th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #DDD;
+          }
+          
+          tr:hover {background-color: #D6EEEE;}
+        display: flex;
+    }
+}
