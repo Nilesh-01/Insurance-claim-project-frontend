@@ -13,20 +13,20 @@
 
 }
 
-.buttons {
-    flex-direction: row;
-    height: 15%;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 24px;
-    box-sizing: border-box;
-    
+.buttons-group {
+  flex-direction: row;
+  height: 15%;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+  
 
-    .btn {
-      text-transform: none;
-      width: 40%;
-      padding: 8px 0;
-    }
+  .btn {
+    text-transform: none;
+    width: 40%;
+    padding: 8px 0;
   }
+}

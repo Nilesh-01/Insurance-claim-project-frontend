@@ -1,8 +1,8 @@
+import React, { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import { useState } from "react";
 import axios from "axios";
 import { useNavigate} from "react-router-dom";
 import './AddVehicleDialog.scss'
@@ -14,6 +14,17 @@ function AddVehicleDialog(props) {
   const [vehicleModel, setVehicleModel] = useState("");
   const [vehicleNo, setVehicleNo] = useState("");
   const [registrationNo, setRegistrationNo] = useState("");
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect (() =>{
+    if(vehicleType && vehicleModel && vehicleNo && registrationNo){
+      setDisabled(false);
+    }
+    else{
+        setDisabled(true);
+    }
+
+  },[vehicleType, vehicleModel, vehicleNo, registrationNo])
 
   const handleVehicleTypeChange = (value) => {
     setVehicleType(value);
@@ -39,7 +50,7 @@ function AddVehicleDialog(props) {
       registrationNo: registrationNo,
       userId: userId,
     };
-    const url = "https://localhost:44352/api/vehicle/add-vehicle";
+    const url = "https://localhost:5001/api/vehicle/add-vehicle";
     axios
       .post(url, data)
       .then((result) => {
@@ -58,6 +69,7 @@ function AddVehicleDialog(props) {
           onChange={(e) => handleVehicleNoChange(e.target.value)}
           className="textfield"
           label="Vehicle No."
+          value={vehicleNo}
           variant="outlined"
           size="small"
           required
@@ -66,6 +78,7 @@ function AddVehicleDialog(props) {
           onChange={(e) => handleRegistrationNoChange(e.target.value)}
           className="textfield"
           label="Registration No."
+          value={registrationNo}
           variant="outlined"
           size="small"
           required
@@ -74,6 +87,7 @@ function AddVehicleDialog(props) {
           onChange={(e) => handleVehicleTypeChange(e.target.value)}
           className="textfield"
           label="Vehicle Type"
+          value={vehicleType}
           variant="outlined"
           size="small"
           required
@@ -82,12 +96,13 @@ function AddVehicleDialog(props) {
           onChange={(e) => handleVehicleModelChange(e.target.value)}
           className="textfield"
           label="Vehicle Model"
+          value={vehicleModel}
           variant="outlined"
           size="small"
           required
         />
       </form>
-      <div className="buttons">
+      <div className="buttons-group">
         <Button className="btn" variant="outlined" onClick={() => props.handleClose()}>
           Cancel
         </Button>
@@ -95,6 +110,7 @@ function AddVehicleDialog(props) {
           className="btn"
           variant="contained"
           onClick={() => handleVehicleAdd()}
+          disabled={disabled}
         >
           Add
         </Button>

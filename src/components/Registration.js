@@ -46,7 +46,10 @@ function Registration() {
   };
 
   const handlePhoneChange = (value) => {
-    setPhone(value);
+    if(value.length <= 10)
+    {
+      setPhone(value);
+    } 
   };
 
   const handleDobChange = (value) => {
@@ -54,7 +57,6 @@ function Registration() {
     const today = new Date();
     const birthDate = new Date(value);
     const age_now = today.getFullYear() - birthDate.getFullYear();
-    // console.log(age_now);
     setAge(age_now);
   };
 
@@ -73,7 +75,7 @@ function Registration() {
       role: role,
       dob: dob,
     };
-    const url = "https://localhost:44352/api/user/add-user";
+    const url = "https://localhost:5001/api/user/add-user";
     axios
       .post(url, data)
       .then((result) => {
@@ -88,13 +90,18 @@ function Registration() {
   return (
     <div className="registration-container">
       <Paper className="registration-subcontainer" elevation={3}>
-        <div className="header">Sign Up</div>
+        <div className="header">
+          <img className="logo" src="https://cdn-icons-png.flaticon.com/512/4437/4437642.png" />
+          <div>Insurance Claim Management</div>
+        </div>
+        <div className="form-title">Sign Up</div>
         <div className="body">
           <form className="form">
             <TextField
               onChange={(e) => handleNameChange(e.target.value)}
               className="textfield"
               label="Name"
+              value={name}
               variant="outlined"
               size="small"
               required
@@ -102,6 +109,7 @@ function Registration() {
             <TextField
               onChange={(e) => handleAddressChange(e.target.value)}
               className="textfield"
+              value={address}
               label="Address"
               variant="outlined"
               size="small"
@@ -111,8 +119,11 @@ function Registration() {
               onChange={(e) => handleEmailChange(e.target.value)}
               className="textfield"
               label="E-mail"
+              value={email}
               variant="outlined"
               size="small"
+              error= {!!(email.length && !(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/).test(email))}
+              helperText = {email.length && !(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/).test(email) ? "Please enter a valid e-mail" : ""}
               required
             />
             <TextField
@@ -121,20 +132,28 @@ function Registration() {
               type="password"
               label="Password"
               variant="outlined"
+              value={password}
               size="small"
+              error= {!!(password.length && (password.length<5 || password.length>10))}
+              helperText= {password.length && (password.length<5 || password.length>10) ? "Password length should be between 5 to 10 characters" : "" }
               required
             />
             <TextField
               onChange={(e) => handlePhoneChange(e.target.value)}
               className="textfield"
               label="Phone"
+              value={phone}
               variant="outlined"
               size="small"
+              error= {!!(phone.length && (phone.length !== 10))}
+              helperText= {phone.length && (phone.length !== 10) ? "Phone number not valid" : "" }
+              type= "number"
               required
             />
             <TextField
               onChange={(e) => handleDobChange(e.target.value)}
               type="date"
+              value={dob}
               className="textfield"
               label="Dob"
               variant="outlined"
@@ -145,10 +164,10 @@ function Registration() {
         </div>
         <div className="buttons">
           <Button className="btn" onClick={() => handleSignin()} variant="text">
-            Sign In
+            Already have an account? Sign In
           </Button>
           <Button
-            className="btn"
+            className="btn primary"
             onClick={() => handleSave()}
             variant="contained"
             disabled={disabled}

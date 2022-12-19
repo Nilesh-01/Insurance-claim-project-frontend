@@ -27,17 +27,18 @@ function Login() {
       email: email,
       password: password,
     };
-    const url = "https://localhost:44352/api/user/login";
+    const url = "https://localhost:5001/api/user/login";
     axios
       .post(url, data)
       .then((result) => {
-        console.log(result.data);
-        if(!result.data.length)
-        {
-            setError(true);
-        }
-        else{
-            navigate("/HomePage", {state:result.data, replace: true});
+        if (!result.data.length) {
+          setError(true);
+        } else {
+          if (result.data[0].role == "Admin") {
+            navigate("/AdminHomePage", { state: result.data, replace: true });
+          } else {
+            navigate("/HomePage", { state: result.data, replace: true });
+          }
         }
       })
       .catch((error) => {
@@ -48,7 +49,14 @@ function Login() {
   return (
     <div className="registration-container">
       <Paper className="registration-subcontainer" elevation={3}>
-        <div className="header">Sign In</div>
+        <div className="header">
+          <img
+            className="logo"
+            src="https://cdn-icons-png.flaticon.com/512/4437/4437642.png"
+          />
+          <div>Insurance Claim Management</div>
+        </div>
+        <div className="form-title">Sign In</div>
         <div className="body">
           <form className="form">
             <TextField
@@ -56,25 +64,40 @@ function Login() {
               type="email"
               className="textfield"
               label="E-mail"
+              value={email}
               variant="outlined"
               size="small"
+              error= {!!(email.length && !(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/).test(email))}
+              helperText = {email.length && !(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/).test(email) ? "Please enter a valid e-mail" : ""}
             />
             <TextField
               onChange={(e) => handlePasswordChange(e.target.value)}
               className="textfield"
               type="password"
               label="Password"
+              value={password}
               variant="outlined"
               size="small"
+              error= {!!(password.length && (password.length<5 || password.length>10))}
+              helperText= {password.length && (password.length<5 || password.length>10) ? "Password length should be between 5 to 10 characters" : "" }
             />
-            
           </form>
         </div>
-        {error && <div className="error" >
-            Wrong Credentials
-          </div>}
+        {error && <div className="error">Wrong Credentials</div>}
         <div className="buttons">
-          <Button className="btn" variant="contained" onClick={() => handleLogin()}>
+        <Button
+            className="btn"
+            variant="text"
+            onClick={() => navigate("/", {replace: true})}
+          >
+            Don't have an account? Register
+          </Button>
+          <Button
+            className="btn primary"
+            variant="contained"
+            onClick={() => handleLogin()}
+            disabled={!email.length || !password.length}
+          >
             Sign In
           </Button>
         </div>

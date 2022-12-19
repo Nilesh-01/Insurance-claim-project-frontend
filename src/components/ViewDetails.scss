@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap");
+
+.view-detail-dialog{
+    
+    .dialog-title{
+        display: flex;
+        justify-content: center;
+        position: relative;
+        border-bottom: 1px solid #c3c3c3;
+        font-family: "Montserrat";
+        width: 400px;
+        border-top: 1px solid #c3c3c3;
+        img{
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+        }
+    }
+    
+    .detail{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+        .text{
+            span{
+                font-weight: 600;
+    
+            }
+        }
+    }
+}
+

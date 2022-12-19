@@ -7,44 +7,48 @@ import axios from "axios";
 import { useNavigate} from "react-router-dom";
 import './AddVehicleDialog.scss'
 
-function AddPolicyDialog(props) {
+function AddClaimDialog(props) {
   const navigate = useNavigate();
   const vehicleId = props.vehicleId;
-  const [policyName, setPolicyName] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [licenseNo, setLicenseNo] = useState("");
+  const [dateOfAccident, setDateOfAccident] = useState("");
+  const [driverName, setDriverName] = useState("");
   const [disabled, setDisabled] = useState(true);
+  const status = "PENDING";
+  const userId = props.userId;
 
   useEffect (() =>{
-    if(policyName && startDate && endDate){
+    if(licenseNo && dateOfAccident && driverName){
       setDisabled(false);
     }
     else{
         setDisabled(true);
     }
 
-  },[policyName, startDate, endDate])
+  },[licenseNo, dateOfAccident, driverName])
 
-  const handlePolicyNameChange = (value) => {
-    setPolicyName(value);
+  const handleLicenseNo = (value) => {
+    setLicenseNo(value);
   };
 
-  const handleStartDateChange = (value) => {
-    setStartDate(value);
+  const handleDateOfAccident = (value) => {
+    setDateOfAccident(value);
   };
 
-  const handleEndDateChange = (value) => {
-    setEndDate(value);
+  const handleDriverName = (value) => {
+    setDriverName(value);
   };
 
-  const handlePolicyAdd = () => {
+  const handleClaimAdd = () => {
     const data = {
-      policyName: policyName,
-      startDate: startDate,
-      endDate: endDate,
+      licenseNo: licenseNo,
+      dateOfAccident: dateOfAccident,
+      driverName: driverName,
+      status: status,
+      userId: userId,
       vehicleId: vehicleId
     };
-    const url = "https://localhost:5001/api/policy/add-policy";
+    const url = "https://localhost:5001/api/claims/add-claim";
     axios
       .post(url, data)
       .then((result) => {
@@ -57,33 +61,32 @@ function AddPolicyDialog(props) {
 
   return (
     <Dialog onClose={props.handleClose} open={props.isOpen}>
-      <DialogTitle>Add Policy</DialogTitle>
+      <DialogTitle>Add Claim</DialogTitle>
       <form className="form">
       <TextField
-          onChange={(e) => handlePolicyNameChange(e.target.value)}
+          onChange={(e) => handleLicenseNo(e.target.value)}
           className="textfield"
-          label="Policy Name"
-          value={policyName}
+          label="License No."
+          value={licenseNo}
           variant="outlined"
           size="small"
           required
         />
         <TextField
-          onChange={(e) => handleStartDateChange(e.target.value)}
+          onChange={(e) => handleDateOfAccident(e.target.value)}
           className="textfield"
           type="date"
-          label="Start Date"
-          value={startDate}
+          label="Date of Accident"
+          value={dateOfAccident}
           variant="outlined"
           size="small"
           required
         />
         <TextField
-          onChange={(e) => handleEndDateChange(e.target.value)}
+          onChange={(e) => handleDriverName(e.target.value)}
           className="textfield"
-          type="date"
-          value={endDate}
-          label="End Date"
+          label="Driver's Name"
+          value={driverName}
           variant="outlined"
           size="small"
           required
@@ -96,7 +99,7 @@ function AddPolicyDialog(props) {
         <Button
           className="btn"
           variant="contained"
-          onClick={() => handlePolicyAdd()}
+          onClick={() => handleClaimAdd()}
           disabled={disabled}
         >
           Add
@@ -105,4 +108,4 @@ function AddPolicyDialog(props) {
     </Dialog>
   );
 }
-export default AddPolicyDialog;
+export default AddClaimDialog;
